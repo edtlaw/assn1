@@ -1,18 +1,4 @@
-class Cell(object):
-    g = None
-    h = None
-    f = None
-    blocked = False
-    visited = False
-
-    def __init__(self, g, h):
-        self.g = 0
-        self.h = 0
-        self.f = g + h
-
-    def calcFVal(self):
-        self.f = self.g + self.h
-
+from GridWorld import Cell
 
 class BinHeap(Cell):
 
