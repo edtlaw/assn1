@@ -21,39 +21,44 @@ class BinHeap(Cell):
 
     def push(self, c):
         self.heapList.append(c)
+        self.percUp()
 
-        self.percUp(len(self.heapList) - 1)
-
-    def popout(self):
-        if len(self.heapList) == 1:
-            return self.heapList.pop(0)
+    def popOut(self):
+        if len(self.heapList) < 1:
+            return None
         tmp = self.heapList[0]
         self.heapList[0] = self.heapList[len(self.heapList) - 1]
         del self.heapList[len(self.heapList) - 1]
         self.percDown()
         return tmp
 
-    def percUp(self, i):
-
-        while i // 2 > 0:
-            if self.heapList[i // 2].f > self.heapList[i].f:
-                tmp = self.heapList[i // 2]
-                self.heapList[i // 2] = self.heapList[i]
-                self.heapList[i] = tmp
-            i = i // 2
+    def percUp(self):
+        i = len(self.heapList) - 1
+        while i > 0:
+            p = (i-1)//2
+            parent = self.heapList[p]
+            item = self.heapList[i]
+            if item.f < parent.f:
+                self.heapList[p] = item
+                self.heapList[i] = parent
+                i = p
+            else:
+                break
 
     def percDown(self):
         i = 0
         while (i * 2) < len(self.heapList):
+            parent = self.heapList[i]
+            if self.minChildInd(i) is not None:
+                c = self.heapList[self.minChildInd(i)]
+                if parent.f > c.f:
+                    self.heapList[i] = c
+                    self.heapList[self.minChildInd(i)] = parent
+                i = self.minChildInd(i)
+            else:
+                break
 
-            if self.minChild(i) is not None:
-                if self.heapList[i].f > self.heapList[self.minChild(i)].f:
-                    tmp = self.heapList[i]
-                    self.heapList[i] = self.heapList[self.minChild(i)]
-                    self.heapList[self.minChild(i)] = tmp
-                i = self.minChild(i)
-
-    def minChild(self, ind):
+    def minChildInd(self, ind):
         mc = None
         left = 2 * ind + 1
         right = left + 1
