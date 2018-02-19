@@ -2,6 +2,7 @@ class Cell(object):
     g = None
     h = None
     f = None
+    blocked = False
     visited = False
 
     def __init__(self, g, h):
