@@ -2,10 +2,7 @@ from BinaryHeap import *
 from GridWorld import *
 
 def main():
-    myList = BinHeap()
-    x = Cell()
-    if x is None:
-        print('k')
+    pass
 
 
 if __name__ == '__main__':
