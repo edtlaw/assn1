@@ -1,5 +1,6 @@
 from random import *
 
+
 class Cell(object):
     g = None
     h = None
@@ -10,13 +11,12 @@ class Cell(object):
     blocked = False
     parent = None
     next = None
-    # for searchVal to portray blocked we can make it equal to infinity and initialize to 0 if not blocked
     # infinity is portrayed as float('inf')
     search = 0
-    #1 initially but when encountered it will change to infinity
-    actioncost = 1
+    # ac (action cost) will be 1 initially but when encountered and is blocked
+    # it will remember it by changing it to infinity
+    ac = 1
     neighbors = set()
-
 
     def __init__(self,x,y,blocked):
         self.x = x

@@ -18,27 +18,44 @@ def main():
         closedlist = set()
         start.setHeur(goal)
         openlist.push(start)
-        ComputePath(world.grid, start, goal, openlist, closedlist)
+        ComputePath(world.grid, start, goal, openlist, closedlist, counter)
         if openlist is None:
             print("I cannot reach the target")
         else:
-            updateStart()
+            start = updateStart(start, goal)
 
 
 if __name__ == '__main__':
     main()
 
-def ComputePath(grid, start, goal, open, closed):
 
+def ComputePath(grid, start, goal, open, closed, counter):
+    for x in start.neighbors:
+        if x.blocked is True:
+            x.ac = float('inf')
     while goal.g > open.peek():
         s = open.popOut()
         closed.add(s)
+        s.setHeur(goal)
         for x in s.neighbors:
-            
+            if x not in closed:
+                if x.search < counter:
+                    x.g = float('inf')
+                    x.search = counter
+                if x.g > s.g + x.ac:
+                    if x.blocked is True:
+                        x.ac = float('inf')
+                    x.parent = s
+                    open.delcell(x)
+                    x.f = x.g + x.h
+                    open.push(x)
 
 
-
-
-
-def updateStart():
-    pass
+def updateStart(start,goal):
+    tmp = goal
+    while tmp is not start:
+        tmp.parent.next = tmp
+        tmp = tmp.parent
+    while tmp.blocked is not True:
+        tmp = tmp.next
+    return tmp.parent
