@@ -5,6 +5,9 @@ class BinHeap(Cell):
     def __init__(self):
         self.heapList = []
 
+    def peek(self):
+        return self.heapList[0].f
+
     def push(self, c):
         self.heapList.append(c)
         self.percUp(len(self.heapList) - 1)
@@ -28,6 +31,11 @@ class BinHeap(Cell):
                 self.heapList[p] = item
                 self.heapList[i] = parent
                 i = p
+            elif item.f == parent.f:
+                if item.g > parent.g:
+                    self.heapList[p] = item
+                    self.heapList[i] = parent
+                    i = p
             else:
                 break
         return
@@ -56,6 +64,9 @@ class BinHeap(Cell):
         if right < len(self.heapList):
             if self.heapList[left].f > self.heapList[right].f:
                 mc = right
+            elif self.heapList[left].f == self.heapList[right].f:
+                if self.heapList[left].g < self.heapList[right].g:
+                    mc = right
         return mc
 
     # we need this function to delete a specific cell and update its F value
