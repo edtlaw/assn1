@@ -54,8 +54,9 @@ for var in list(range(50)):              #delete # to go through all 50
 
     qiter = iter(q)
     for numbers in qiter:
-        toody[int(numbers)][int(next(qiter))].blocked=1
-
+        toody[int(numbers)][int(next(qiter))].blocked=1             ##loads blocked
+    x = 0
+    y = 0
 
 
     #toody[0][1].blocked=1
@@ -70,15 +71,18 @@ for var in list(range(50)):              #delete # to go through all 50
     goal = toody[20][20]
     start.g=0
     start.prevCell=None
+    #toody[25][25].blocked = 0
 
-    def printToody(toody,closedList):   #doesn't print the "finished" iteration of the map. looks incomplete.
-        for x in range(33):          #prints too much orginally maxRows
-            for y in range(33):      #prints too much holy god maxCols
+    def printToody(toody,closedList,goal):   #doesn't print the "finished" iteration of the map. looks incomplete.
+        for x in range(25):          #prints too much orginally maxRows
+            for y in range(25):      #prints too much holy god maxCols
                 temp=' '
                 if toody[x][y].blocked==1:
                     poo('B'+temp)
                 elif toody[x][y].blocked==0:
-                    if toody[x][y] in closedList:
+                    if toody[x][y] == goal:# prints too many Gs?
+                        poo('G'+temp)      #otherwise prints too many Gs
+                    elif toody[x][y] in closedList:
                         poo('P'+temp)
                     else:
                         poo('O'+temp)
@@ -121,7 +125,7 @@ for var in list(range(50)):              #delete # to go through all 50
         if not openList:
             print('empty')
         while openList:
-            printToody(toody,closedList)
+            printToody(toody,closedList,goal)
             print('getting')
             curCell=heapq.heappop(openList)[1]
             closedList.append(curCell)
@@ -130,6 +134,7 @@ for var in list(range(50)):              #delete # to go through all 50
             poo('curCell: '+str(curCell.x)+', '+str(curCell.y)+'\n')
             if curCell == goal:
                 print('found')
+                print(len(closedList))
                 return reconstructPath(curCell)
             x=curCell.x
             y=curCell.y
@@ -159,6 +164,7 @@ for var in list(range(50)):              #delete # to go through all 50
             checkNeighbor(x,y+1)
         print('not found')
         return 'not found'
+
     search(start,goal)
 
     #search
