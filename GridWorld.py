@@ -61,7 +61,7 @@ class GridWorld(Cell):
             stack.append(tmp)
             while len(stack) > 0:
                 tmp = stack.pop()
-                self.findNeighbors(tmp)
+                
                 for x in tmp.neighbors:
                     if x.visited is False:
                         self.setVisited(x)
