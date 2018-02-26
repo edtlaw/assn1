@@ -16,10 +16,9 @@ class Cell(object):
     # ac (action cost) will be 1 initially but when encountered and is blocked
     # it will remember it by changing it to infinity
     ac = 1
-    neighbors = set()
 
     def __init__(self):
-        pass
+        self.neighbors = set()
 
     def setHeur(self, goal):
         if self is goal:
@@ -61,7 +60,7 @@ class GridWorld(Cell):
             stack.append(tmp)
             while len(stack) > 0:
                 tmp = stack.pop()
-                
+
                 for x in tmp.neighbors:
                     if x.visited is False:
                         self.setVisited(x)
@@ -72,7 +71,6 @@ class GridWorld(Cell):
                         else:
                             x.blocked = 1
 
-        pass
 
     def setVisited(self, cell):
         cell.visited = True
@@ -82,15 +80,19 @@ class GridWorld(Cell):
 
         x = s.x
         y = s.y
+
         if x > 0:
             tmp = self.grid[x-1][y]
             s.neighbors.add(tmp)
+
         if x < self.size-1:
             tmp = self.grid[x+1][y]
             s.neighbors.add(tmp)
+
         if y > 0:
             tmp = self.grid[x][y-1]
             s.neighbors.add(tmp)
+
         if y < self.size-1:
             tmp = self.grid[x][y+1]
             s.neighbors.add(tmp)

@@ -1,5 +1,6 @@
 from GridWorld import Cell
 
+
 class BinHeap(Cell):
 
     def __init__(self):
