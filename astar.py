@@ -36,9 +36,18 @@ class Cell(object):
 # 0  1  0  0  0
 # 0  0  0  0  0
 # 0  0  0  0  0
-maxRows=5
-maxCols=5
+
+
+#fp = open(str(var) + '.txt', 'r')
+#s = fp.read()
+#fp.close()
+maxRows=5 #101
+maxCols=5 #101
 toody=[[Cell(x,y,0) for y in range(maxCols)] for x in range(maxRows)]
+
+
+#while
+
 toody[0][1].blocked=1
 toody[2][1].blocked=1
 toody[0][3].blocked=1
@@ -47,13 +56,44 @@ start = toody[0][0]
 goal = toody[1][4]
 start.g=0
 start.prevCell=None
-def printToody(toody):
+
+
+
+#    fp.close()
+
+
+def printToody(toody,closedList):
     for x in range(maxRows):
         for y in range(maxCols):
             temp=' '
-            poo(str(toody[x][y].blocked)+temp)
+            if toody[x][y].blocked==1:
+                poo('B'+temp)
+            elif toody[x][y].blocked==0:
+                if toody[x][y] in closedList:
+                    poo('P'+temp)
+                else:
+                    poo('O'+temp)
         poo("\n")
-printToody(toody)
+
+
+
+#def printToody1(toody,closedList,currCell):
+#    for x in range(maxRows):
+            #if toody[x][y].blocked==1:
+    #            poo('B'+temp)
+    #            if toody[x][y] in
+    #            if toody[x][y] in closedList:
+    #            else:
+    #                poo('O'+temp)
+    #    poo("\n")
+
+
+
+
+
+
+
+
 
 openList = []
 heapq.heappush(openList,(start.f,start))
@@ -61,6 +101,12 @@ closedList = []
 
 #backtrack from goal to start
 def reconstructPath(curCell):
+    poo(str(curCell.x) + ', ' + str(curCell.y) + '\n')
+    while curCell and curCell.prevCell is not None:
+        curCell=curCell.prevCell
+        poo(str(curCell.x) + ', ' + str(curCell.y) + '\n')
+
+def findpath(curCell):
     poo(str(curCell.x) + ', ' + str(curCell.y) + '\n')
     while curCell and curCell.prevCell is not None:
         curCell=curCell.prevCell
@@ -75,6 +121,7 @@ def search(start,goal):
     if not openList:
         print('empty')
     while openList:
+        printToody(toody,closedList)
         print('getting')
         curCell=heapq.heappop(openList)[1]
         closedList.append(curCell)
