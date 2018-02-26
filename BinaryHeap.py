@@ -6,6 +6,8 @@ class BinHeap(Cell):
         self.heapList = []
 
     def peek(self):
+        if self.heapList[0] is None:
+            return None
         return self.heapList[0].f
 
     def push(self, c):

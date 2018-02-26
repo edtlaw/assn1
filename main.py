@@ -8,6 +8,7 @@ def main():
     counter = 0
     start = world.grid[4][2]
     goal = world.grid[4][4]
+
     while start != goal:
         counter = counter + 1
         start.g = 0
