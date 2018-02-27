@@ -1,16 +1,18 @@
 from random import *
-
+import random
 
 class Cell(object):
-    g = None
+    g = float('inf')
     h = None
-    f = None
+    f = float('inf')
     x = None
     y = None
     visited = False
-    blocked = 0
+    blocked = False
     parent = None
     next = None
+    start = False
+    goal = False
     # infinity is portrayed as float('inf')
     search = 0
     # ac (action cost) will be 1 initially but when encountered and is blocked
@@ -23,7 +25,8 @@ class Cell(object):
     def setHeur(self, goal):
         if self is goal:
             self.h = 0
-        # self.h = put manhattan distance using goal.xcord and goal.ycord
+        else:
+            self.h = abs(self.x - goal.x) + abs(self.y - goal.y)
 
     def calcInfo(self, goal, start):
         pass
@@ -64,12 +67,13 @@ class GridWorld(Cell):
                 for x in tmp.neighbors:
                     if x.visited is False:
                         self.setVisited(x)
-
-                        b = randint(1, 100)
+                        deck = list(range(1, 100))
+                        random.shuffle(deck)
+                        b = deck.pop()
                         if b <= 70:
                             stack.append(x)
                         else:
-                            x.blocked = 1
+                            x.blocked = True
 
 
     def setVisited(self, cell):
@@ -96,3 +100,18 @@ class GridWorld(Cell):
         if y < self.size-1:
             tmp = self.grid[x][y+1]
             s.neighbors.add(tmp)
+
+    def printFunc(self):
+        for i in range(self.size):
+            for j in range(self.size):
+                c = self.grid[i][j]
+                if c.goal:
+                    print("x:", c.x, "y:", c.y, "|", "G", " ", end="|")
+                elif c.start:
+                    print("x:", c.x, "y:", c.y, "|", "S", " ", end="|")
+                else:
+                    if c.blocked:
+                        print("x:", c.x, "y:", c.y, "|", 1, " ", end="|")
+                    else:
+                        print("x:", c.x, "y:", c.y, "|", 0, " ", end="|")
+            print('\n')

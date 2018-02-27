@@ -1,9 +1,11 @@
 from GridWorld import *
 from BinaryHeap import *
 import pickle
+import sys
 
 def main():
-    gw = GridWorld(5)
+    sys.setrecursionlimit(14000)
+    gw = GridWorld(10)
     gw.buildMaze()
     for i in range(len(gw.grid)):
         for j in range(len(gw.grid[i])):
@@ -17,7 +19,8 @@ def main():
         gw = pickle.load(input)
         for i in range(len(gw.grid)):
             for j in range(len(gw.grid[i])):
-                print(gw.grid[i][j].blocked, " ", end ="")
+                print(gw.grid[i][j].blocked, " ", end="")
             print('\n')
+
 if __name__ == '__main__':
     main()

@@ -1,29 +1,29 @@
 from BinaryHeap import *
 from GridWorld import *
-
+import pickle
 
 def main():
+    with open('graph_1.pkl', 'rb') as input:
+        world =  pickle.load(input)
+        counter = 0
+        start = world.grid[4][2]
+        goal = world.grid[4][4]
 
-    world = GridWorld()
-    counter = 0
-    start = world.grid[4][2]
-    goal = world.grid[4][4]
-
-    while start != goal:
-        counter = counter + 1
-        start.g = 0
-        start.search = counter
-        goal.g = float('inf')
-        goal.search = counter
-        openlist = BinHeap()
-        closedlist = set()
-        start.setHeur(goal)
-        openlist.push(start)
-        ComputePath(world.grid, start, goal, openlist, closedlist, counter)
-        if openlist is None:
-            print("I cannot reach the target")
-        else:
-            start = updateStart(start, goal)
+        while start != goal:
+            counter = counter + 1
+            start.g = 0
+            start.search = counter
+            goal.g = float('inf')
+            goal.search = counter
+            openlist = BinHeap()
+            closedlist = set()
+            start.setHeur(goal)
+            openlist.push(start)
+            ComputePath(world.grid, start, goal, openlist, closedlist, counter)
+            if openlist is None:
+                print("I cannot reach the target")
+            else:
+                start = updateStart(start, goal)
 
 
 if __name__ == '__main__':
